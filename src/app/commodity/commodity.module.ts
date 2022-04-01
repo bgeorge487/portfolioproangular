@@ -10,6 +10,9 @@ import { CommodityListingComponent } from './commodity-listing/commodity-listing
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    CommodityListingComponent
   ]
 })
 export class CommodityModule { }

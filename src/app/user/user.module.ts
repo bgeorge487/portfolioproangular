@@ -10,6 +10,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    UserProfileComponent
   ]
 })
 export class UserModule { }
