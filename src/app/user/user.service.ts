@@ -45,6 +45,4 @@ export class UserService {
       (response) => {this.user = response}
     )
   }
-
-
 }
