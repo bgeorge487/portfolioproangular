@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserInterface } from 'src/interfaces/user';
 import { Observable } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,53 +11,31 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  title: string = 'User Information';
   private apiUri: string = "";
   private user: any;
+
   
 
-  getUserList() {
-    return this.http.get(this.apiUri);
+  getUserList(): Observable<UserInterface[]> {
+    return this.http.get<UserInterface[]>(this.apiUri);
   }
 
-  createUser(user: Object) : Observable<Object> {
-    return this.http.post(`${this.apiUri}`, user);        
+  createUser(user: UserInterface) : Observable<UserInterface> {
+    return this.http.post<UserInterface>(`${this.apiUri}`, user);        
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: number) : Observable<UserInterface> {
     /* BESURE TO UPDATE TO THE APPROPRIATE URL FORMAT IF NECESSARY*/
-    this.http.delete(`${this.apiUri}/api/user/${id}`).subscribe(
-      (response) => {this.user = response}
-    )
+    return this.http.delete<UserInterface>(`${this.apiUri}/api/user/${id}`);
   }
 
-  editUser(id: number, value: any): Observable<Object> {
+  editUser(user: UserInterface): Observable<UserInterface>{
+    return this.http.put<UserInterface>(this.apiUri, user);
+  }  
 
-    /* BESURE TO UPDATE TO THE APPROPRIATE URL FORMAT IF NECESSARY*/
-    return this.http.put(`${this.apiUri}/user/${id}`, value)
-  }
-
-  addCommodity() {
-
-  }
+  
 
 }
 
 
-/* this.http.put(`${this.apiUri}/api/user/${this.id}`,
-    JSON.stringify({
-      body: '',
-      title: ''
-    })
-    ).subscribe(
-      (response) => {this.user = response}
-    ) */
-
-    /* this.http.post(
-      `${this.apiUri}/api/user`,
-      JSON.stringify({
-        body: 'id',
-        title: ''
-      })
-    ).subscribe(
-      (response) => {this.user = response}
-    ) */
