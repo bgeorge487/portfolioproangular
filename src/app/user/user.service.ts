@@ -1,50 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserInterface } from 'src/interfaces/user';
+import { UserChange } from './user-interfaces/user-change';
+import { UserCommodity } from './user-interfaces/user-commodity';
+import { map, observable } from 'rxjs';
+import { Coins } from './user-interfaces/coins';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  private apiUriCommodity : string ="https://localhost:7168/api/commodity";
+  private apiUriChange : string ="https://localhost:7168/api/change";
+  private apiUriCoin : string ="https://localhost:7168/api/coin";
+  private apiUriQuote : string ="https://localhost:7168/api/quote";
+  private apiUriSearch : string ="https://localhost:7168/api/search";
+  private apiUriSymbol : string ="https://localhost:7168/api/symbol";
+  private apiUriUser : string ="https://localhost:7168/api/user";
+  
+ 
+  
   constructor(private http: HttpClient) { }
+ 
 
-  private apiUri: string = "";
-  private user: any;
-  private id: number | undefined;
-
-  getUserList() {
-    return this.http.get(this.apiUri);
+  getUserCommodities(id:any){
+    return this.http.get<UserChange[]>(`${this.apiUriUser}?id=${id}`)
   }
 
-  createUser(user: UserInterface) {
-    this.http.post(
-      `${this.apiUri}/api/user`,
-      JSON.stringify({
-        body: 'id',
-        title: ''
-      })
-    ).subscribe(
-      (response) => {this.user = response}
-    )
+  userAssetSearch(ticker:string){
+    return this.http.get<any>(`${this.apiUriSymbol}?symbol=${ticker}`,{observe:'body'})  
   }
 
-  deleteUser() {
-    this.http.delete(`${this.apiUri}/api/user/${this.id}`).subscribe(
-      (response) => {this.user = response}
-    )
+  addAsset(newCommodity:UserCommodity){
+    delete newCommodity.commodityId;
+    return this.http.post<any>(this.apiUriCommodity,newCommodity, {observe:'body'});    
   }
 
-  editUser() {
-    this.http.put(`${this.apiUri}/api/user/${this.id}`,
-    JSON.stringify({
-      body: '',
-      title: ''
-    })
-    ).subscribe(
-      (response) => {this.user = response}
-    )
-  }
+  userCryptoSearch(query:string){
 
+    return this.http.get<Coins[]>(`${this.apiUriSearch}/crypto?query=${query}`)
+
+  }
 
 }

@@ -1,23 +1,57 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule  } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { UserModule } from './user/user.module';
 import { CommodityModule } from './commodity/commodity.module';
 
 import { AppComponent } from './app.component';
-import { CommodityService } from './commodity/commodity.service';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { HomeComponent } from './home/home.component';
+import { MenuComponent } from './menu/menu.component';
+import { NotFoundComponent } from './error-pages/not-found/not-found.component';
+import { JwtModule } from "@auth0/angular-jwt";
+import { UserModule } from './user/user.module';
+
+
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent,
+    MenuComponent,
+    NotFoundComponent,
+   
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     UserModule,
-    CommodityModule
+     CommodityModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:4200"],
+        disallowedRoutes: []
+      }
+    }),
+    AppRoutingModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
