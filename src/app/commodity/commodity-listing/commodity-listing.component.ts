@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommodityService } from '../commodity.service';
+
 
 @Component({
   selector: 'app-commodity-listing',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommodityListingComponent implements OnInit {
 
-  constructor() { }
+  symbol: string = "mmm%2caxp%2camgn%2caapl%2cba%2ccat%2ccvx%2ccsco"
+    + "%2cdow%2cgs%2chon%2cibm%2cintc%2cjnj%2cjpm%2cmcd%2cmrk%2cmsft"
+    + "%2cnke%2cpg"
+    
+  quoteDetails: any;
+
+  constructor(private repo : CommodityService) { } 
 
   ngOnInit(): void {
+    this.repo.getStockQuote(this.symbol).subscribe(
+      (response) => {this.quoteDetails = response}
+    );
   }
 
 }
