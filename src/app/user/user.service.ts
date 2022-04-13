@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserChange } from './user-interfaces/user-change';
 import { UserCommodity } from './user-interfaces/user-commodity';
 import { map, observable } from 'rxjs';
-
 import { Coins } from './user-interfaces/coins';
+
 
 @Injectable({
   providedIn: 'root'
@@ -34,15 +34,13 @@ export class UserService {
 
   addAsset(newCommodity:UserCommodity){
     delete newCommodity.commodityId;
-    return this.http.post<any>(this.apiUriCommodity,newCommodity, {observe:'body'});
-     
+    return this.http.post<any>(this.apiUriCommodity,newCommodity, {observe:'body'});    
   }
 
   userCryptoSearch(query:string){
 
     return this.http.get<Coins[]>(`${this.apiUriSearch}/crypto?query=${query}`)
- 
-  }
 
+  }
 
 }

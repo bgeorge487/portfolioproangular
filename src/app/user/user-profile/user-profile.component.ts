@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AuthResponseDto } from 'src/app/auth-interfaces/login-models/auth-response-dto';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
 import { UserChange } from '../user-interfaces/user-change';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -16,6 +18,7 @@ export class UserProfileComponent implements OnInit {
   securityObject: AuthResponseDto;
   id = '';
   commodities: UserChange[] =[];
+
 
 user!:AuthResponseDto;
 isUserAuthenticated!: boolean;

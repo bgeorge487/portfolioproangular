@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,17 @@ import { Injectable } from '@angular/core';
 })
 export class CommodityService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  private apiUri: string = "";
+
+  getCommodity() {
+    return this.http.get(this.apiUri);
+  }
+
+  getCommodityDetails(id: string) {
+    return this.http.get(`${this.apiUri}/${id}`)
+  }
+
+
 }

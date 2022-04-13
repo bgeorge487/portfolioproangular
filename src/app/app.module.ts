@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule  } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
+import { UserModule } from './user/user.module';
+import { CommodityModule } from './commodity/commodity.module';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -19,6 +22,8 @@ export function tokenGetter() {
   return localStorage.getItem("token");
 }
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,10 +37,12 @@ export function tokenGetter() {
   ],
   imports: [
     BrowserModule,
+
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     UserModule,
+     CommodityModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -44,9 +51,8 @@ export function tokenGetter() {
       }
     }),
     AppRoutingModule
+
   ],
-  
-  
   providers: [],
   bootstrap: [AppComponent]
 })

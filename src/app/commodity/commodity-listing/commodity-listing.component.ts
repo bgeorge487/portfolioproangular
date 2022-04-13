@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommodityService } from '../commodity.service';
 
 @Component({
   selector: 'app-commodity-listing',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommodityListingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private repo: CommodityService) { }
+
+  commodityList: any;
 
   ngOnInit(): void {
+    this.repo.getCommodity().subscribe(
+      (response) => {this.commodityList = response;}
+    )
   }
 
 }

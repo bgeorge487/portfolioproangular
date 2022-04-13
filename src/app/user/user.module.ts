@@ -9,10 +9,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUserAssetComponent } from './add-user-asset/add-user-asset.component';
 
 
-
-
-
-
 @NgModule({
   declarations: [
     UserProfileComponent,
@@ -21,13 +17,16 @@ import { AddUserAssetComponent } from './add-user-asset/add-user-asset.component
     AddUserAssetComponent,
   ],
   imports: [
+
     CommonModule,
     RouterModule,
     UserRouting,
     FormsModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    UserProfileComponent
 
-    
   ]
 })
 export class UserModule { }
