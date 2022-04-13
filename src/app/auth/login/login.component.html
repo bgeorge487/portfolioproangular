@@ -7,7 +7,7 @@
             {{errorMessage}}
         </div>
 
-        <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
+        <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="signIn(loginForm.value)">
             <div class="form-group row">
                 <label for="email" class="col-form-label col-sm-2">Email:</label>
                 <div class="col-md-5">

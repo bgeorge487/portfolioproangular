@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-    public loginUser = (loginFormValue:AuthDto) => {
+    public signIn = (loginFormValue:AuthDto) => {
       this.showError = false;
       const login = {... loginFormValue };
       const user: AuthDto = {
@@ -35,10 +35,16 @@ export class LoginComponent implements OnInit {
       }
   
       this._authService.loginUser(user)
-      .subscribe({
-        next: resp => {if(resp.isAuthenticated ==true) {this._router.navigate([ 'home'])}},
-        error: err => { this.errorMessage = "error"}
-      })
-    
+
   }
 }
+
+
+// .subscribe({
+//   next: resp =>  {
+//     this._authService.sendAuthStateChangeNotification(resp.body!.isAuthenticated)
+//     localStorage.setItem("token", resp.body!.token)
+//     this._router.navigate(['profile']);
+// },
+//   error: err => { this.errorMessage = "error"}
+// })
