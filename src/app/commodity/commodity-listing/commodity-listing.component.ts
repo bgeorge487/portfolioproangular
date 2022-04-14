@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommodityService } from '../commodity.service';
 
-
 @Component({
   selector: 'app-commodity-listing',
   templateUrl: './commodity-listing.component.html',
@@ -21,6 +20,8 @@ export class CommodityListingComponent implements OnInit {
     this.repo.getStockQuote(this.symbol).subscribe(
       (response) => {this.quoteDetails = response}
     );
+  
+
   }
 
 }

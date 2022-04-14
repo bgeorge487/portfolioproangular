@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -5,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CommodityService {
+
 
   private apiUri:string = "https://localhost:7168/api";
 
@@ -18,4 +20,13 @@ export class CommodityService {
     console.log(`${this.apiUri}/Quote?symbols=${symbol}`);
     return this.http.get(`${this.apiUri}/Quote?symbols=${symbol}`);
   }
+
+  getCommodity() {
+    return this.http.get(this.apiUri);
+  }
+
+  getCommodityDetails(id: string) {
+    return this.http.get(`${this.apiUri}/${id}`)
+  }
+
 }
