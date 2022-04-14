@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule,Routes }  from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule  } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { UserModule } from './user/user.module';
 import { CommodityModule } from './commodity/commodity.module';
 
 import { AppComponent } from './app.component';
+
+import { CommodityListingComponent } from './commodity/commodity-listing/commodity-listing.component';
+import { SearchStockComponent } from './commodity/search-stock/search-stock.component';
+import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
+
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './home/home.component';
@@ -23,7 +29,6 @@ export function tokenGetter() {
 }
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,18 +36,16 @@ export function tokenGetter() {
     RegisterComponent,
     HomeComponent,
     MenuComponent,
-    NotFoundComponent,
-   
+    NotFoundComponent
     
   ],
   imports: [
     BrowserModule,
-
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     UserModule,
-     CommodityModule,
+    CommodityModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -51,7 +54,6 @@ export function tokenGetter() {
       }
     }),
     AppRoutingModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]
