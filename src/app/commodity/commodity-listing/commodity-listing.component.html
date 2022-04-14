@@ -1,1 +1,9 @@
-<p>commodity-listing works!</p>
+<hr>
+<div *ngFor="let detail of quoteDetails; let i = index">
+    <li>{{i+1}}. {{detail.id}}</li>
+    <li>name: {{detail.attributes.name}}</li>
+    <li>Price: ${{detail.attributes.last}}</li>
+    <li>Change: {{detail.attributes.percentChange}}%</li>
+    <br>
+
+</div>
