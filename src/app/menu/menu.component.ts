@@ -10,6 +10,11 @@ import { AuthService } from '../shared/services/auth.service';
 export class MenuComponent implements OnInit {
   public isUserAuthenticated!: boolean;
 
+  imageHome = 'assets/images/home.png'
+  imageSearch = 'assets/images/magnifier.png'
+  imageLogin = 'assets/images/log-in.png'
+  imageRegister = 'assets/images/edit.png'
+
   constructor(private _authService: AuthService, private _router: Router) { 
     this._authService.authChanged
     .subscribe(res => {
