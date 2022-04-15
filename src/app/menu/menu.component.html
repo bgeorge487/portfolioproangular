@@ -1,28 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" [routerLink]="['']" routerLinkActive="active" 
-    [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="navbar">
   
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form class="form-inline my-2 my-lg-0">
-        <ul *ngIf='!isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-            <a class="nav-link"[routerLink]="['/login']" routerLinkActive="active" 
-              [routerLinkActiveOptions]="{exact: true}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"[routerLink]="['/register']" routerLinkActive="active" 
-              [routerLinkActiveOptions]="{exact: true}">Register</a>
-          </li>
-        </ul>
-        <ul *ngIf='isUserAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-            <button class="btn btn-link" style="color: #ffffff80;" (click)="logout()">Logout</button>
-          </li>
-        </ul>
-      </form>
-    </div>
-</nav>
+  <a class="active" [routerLink]="['']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageHome" alt="home icon" width = "25" height = "25"></a>
+  <a class="active" [routerLink]="['/search-stock']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageSearch" alt="search icon" width = "25" height = "25"></a>
+  <a *ngIf='!isUserAuthenticated'class="active" [routerLink]="['/login']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageLogin" alt="login icon" width = "25" height = "25"> Login</a>
+  <a *ngIf='isUserAuthenticated'class="active" [routerLink]="['/login']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageLogin" alt="login icon" width = "25" height = "25"> Logout</a>
+  <a class="active" [routerLink]="['/register']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageRegister" alt="registration icon" width = "25" height = "25">Register</a>
+</div>

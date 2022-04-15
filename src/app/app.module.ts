@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule  } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CommodityModule } from './commodity/commodity.module';
 
@@ -21,13 +20,13 @@ import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { JwtModule } from "@auth0/angular-jwt";
+
 import { UserModule } from './user/user.module';
 
 
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
-
 
 @NgModule({
   declarations: [
@@ -48,11 +47,12 @@ export function tokenGetter() {
     CommodityModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:4200"],
-        disallowedRoutes: []
+        tokenGetter:() => {
+          return localStorage.getItem('token'); },
+          allowedDomains: ['http://localhost:4200']
       }
     }),
+
     AppRoutingModule
   ],
   providers: [],
