@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../shared/services/auth.service';
+import { AuthService } from '../auth/auth.service';
+import { AuthResponseDto } from '../shared/interfaces/auth-interfaces/login-models/auth-response-dto';
+import { User } from '../shared/interfaces/user-interfaces/user';
 
 @Component({
   selector: 'app-menu',
@@ -8,25 +10,28 @@ import { AuthService } from '../shared/services/auth.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  public isUserAuthenticated!: boolean;
+  
+  currentUser?:AuthResponseDto;
+  userName:any;
+ 
 
   constructor(private _authService: AuthService, private _router: Router) { 
-    this._authService.authChanged
-    .subscribe(res => {
-      this.isUserAuthenticated = res;
-    })
+
+    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
+
   }
 
   ngOnInit(): void {
-    this._authService.authChanged
-    .subscribe(res => {
-      this.isUserAuthenticated = res;
-    })
+    this.userName=this.currentUser?.email.substring(0, this.currentUser?.email.lastIndexOf("@"))
+  
+  
+    
+
   }
 
   public logout = () => {
     this._authService.logout();
-    this._router.navigate(["/"]);
+    this._router.navigateByUrl('/home');
   }
 
 }

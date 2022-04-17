@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthDto } from 'src/app/auth-interfaces/login-models/auth-dto';
+import { AuthDto } from 'src/app/shared/interfaces/auth-interfaces/login-models/auth-dto';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,16 +36,10 @@ export class LoginComponent implements OnInit {
       }
   
       this._authService.loginUser(user)
-
+      .pipe(first())
+      .subscribe(
+          data => {
+              this._router.navigate(['/user-profile']);
+          })
   }
 }
-
-
-// .subscribe({
-//   next: resp =>  {
-//     this._authService.sendAuthStateChangeNotification(resp.body!.isAuthenticated)
-//     localStorage.setItem("token", resp.body!.token)
-//     this._router.navigate(['profile']);
-// },
-//   error: err => { this.errorMessage = "error"}
-// })

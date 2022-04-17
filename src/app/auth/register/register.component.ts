@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { RegistrationDto } from 'src/app/auth-interfaces/reg-model/registration-dto';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { RegistrationDto } from 'src/app/shared/interfaces/auth-interfaces/reg-model/registration-dto';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,10 +15,8 @@ export class RegisterComponent implements OnInit {
   public showError: boolean = false;
 
   constructor(private _authService :AuthService, private router: Router ) {
-
-          
-}
     
+}
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -30,7 +28,6 @@ export class RegisterComponent implements OnInit {
     });
     
   }
-
 
   public registerUser = (registerFormValue:any) => {
     this.showError = false;
@@ -45,7 +42,7 @@ export class RegisterComponent implements OnInit {
     };
     this._authService.registerUser(user)
     .subscribe(
-      {next: resp => {if(resp.regSuccessful==true){ this.router.navigate(["login"])};
+      {next: resp => {if(resp.regSuccessful==true){ this.router.navigate(['/auth/login'])}; //remove if 
        error: () =>  {this.errorMessage = resp.errors;}}
     })
   }

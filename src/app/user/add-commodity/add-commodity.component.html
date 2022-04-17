@@ -1,0 +1,58 @@
+<form [formGroup]="searchForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(searchForm.value)">
+    <div class="form-group row">
+        <label for="tickerSymbol" class="col-form-label col-sm-2">Ticker:</label>
+        <div class="col-md-5">
+            <input type="text" id="tickerSymbol" formControlName="tickerSymbol" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-5">
+            <input type="radio" value="Crypto" id="password" formControlName="assetClass" class="form-control" /> Crypto
+            <input type="radio" value="Stock" id="password" formControlName="assetClass" class="form-control" /> Stock
+        </div>
+    </div>
+    <br>
+    <div class="form-group row">
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-info" [disabled]="!searchForm.valid">Search</button>
+        </div>
+    </div>
+</form>
+<div *ngIf="isStockSearch">
+<ul>
+    <li>
+       Company: {{commodity.commodityName}}
+    </li>
+    <li>
+        Company: {{commodity.stockSymbol}}
+     </li>
+</ul>
+    <button
+    type="submit"
+    class="btn btn-primary"
+    (click)="addStock()">
+    Click if correct
+  </button>   
+</div>
+<div *ngIf="isCryptoSearch">
+    <ul>
+        <li *ngFor='let coin of crypto; let i=index'>
+            {{i+1}} - {{coin.name}} | {{coin.symbol}} | {{coin.price}} 
+            <button  type="submit" class="btn btn-primary"(click)="addCrypto(coin.name, coin.symbol, coin.uuid)" >click to add to Watched</button>
+        </li>
+    </ul>
+</div>
+<div *ngIf="doAddToPortfolio">
+    <p>Would you like to also like to add this to your portfolio?</p>
+    <button  
+    type="submit" class="btn btn-primary"(click)="addToPortfolio()" >Yes
+</button>
+<button class="btn btn-primary">  
+    <a class="navbar-brand" [routerLink]="['/user-profile']" routerLinkActive="active" 
+    [routerLinkActiveOptions]="{exact: true}">No</a>
+</button>
+</div>
+
+
+
+    

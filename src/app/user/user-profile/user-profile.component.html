@@ -1,16 +1,23 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-    <app-dashboard></app-dashboard>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div>
+    <ul>
+      <li><a class="navbar-brand" routerLink="/add-commodity">Add Commodity</a></li>
+      <li> <a class="navbar-brand"routerLink="/portfolio">Add To Portfolio</a></li>
+    </ul>
+  </div>
 </nav>
-<h2>Hello {{title}}</h2>
+
+
+<h2>Hello {{userName}}</h2>
+
+
 <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Id</th>
         <th>Last Changed</th>
-        <th>Change Amount</th>
+        <th>Previous Total</th>
         <th> Current Total </th>
-        <th>URL</th>
-        <th>Delete</th>
         <th> Ref#</th>
         <th> Name</th>
         <th> Symbol</th>
@@ -19,24 +26,21 @@
     </thead>
     <tbody>
       <tr *ngFor="let commodity of commodities">
-        <td>
-            {{commodity.changeId}}
-        </td>
-        <td>{{commodity.changeTime| date}}</td>
-        <td>{{commodity.changeAmount }}</td>
+        <td> {{commodity.changeId}}</td>
+        <td>{{commodity.changeTime}}</td>
+        <td> {{commodity.totalAmount - commodity.changeAmount }}</td>
         <td>{{commodity.totalAmount}}</td>
         <td>{{commodity.commodityId}}</td>   
-        <td>{{commodity.commodity.commodityName}}</td>    
-        <td>{{commodity.commodity.stockSymbol}}</td>    
-        <td>{{commodity.commodity.type}}</td>    
+        <td>{{commodity.commodity?.commodityName}}</td>    
+        <td>{{commodity.commodity?.stockSymbol}}</td>    
+        <td>{{commodity.commodity?.type}}</td>
+        <br>
+        <td><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'details']" routerLinkActive="active" 
+          [routerLinkActiveOptions]="{exact: true}">Details</a></td>   
+          <td><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'update']" routerLinkActive="active" 
+          [routerLinkActiveOptions]="{exact: true}">Update</a></td> 
       </tr>
     </tbody>
   </table>
+  <router-outlet></router-outlet>
 
-
-
-  
-
-<div class="container body-content">
-    <router-outlet name="profile"></router-outlet>
-</div>

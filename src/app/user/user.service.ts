@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserChange } from './user-interfaces/user-change';
-import { UserCommodity } from './user-interfaces/user-commodity';
-import { map, observable } from 'rxjs';
-import { Coins } from './user-interfaces/coins';
+import { UserChange } from '../shared/interfaces/user-interfaces/user-change';
+import { BehaviorSubject, map, observable, Subject, tap } from 'rxjs';
+import { Coins } from '../shared/interfaces/commodity-interfaces/coins';
+import { ChangeDto } from '../shared/interfaces/user-interfaces/change-dto';
+
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import { Coins } from './user-interfaces/coins';
 export class UserService {
 
   private apiUriCommodity : string ="https://localhost:7168/api/commodity";
-  private apiUriChange : string ="https://localhost:7168/api/change";
+  private apiUriChange : string ="https://localhost:7168/api/user";
   private apiUriCoin : string ="https://localhost:7168/api/coin";
   private apiUriQuote : string ="https://localhost:7168/api/quote";
   private apiUriSearch : string ="https://localhost:7168/api/search";
@@ -20,27 +21,38 @@ export class UserService {
   private apiUriUser : string ="https://localhost:7168/api/user";
   
  
+  hasChanged: Subject<null> = new Subject<null>();
   
-  constructor(private http: HttpClient) { }
- 
+  constructor(private http: HttpClient) { 
 
+  }
+ 
+  notifyAboutChange() {
+    this.hasChanged.next(null);
+  }
   getUserCommodities(id:any){
     return this.http.get<UserChange[]>(`${this.apiUriUser}?id=${id}`)
   }
 
-  userAssetSearch(ticker:string){
-    return this.http.get<any>(`${this.apiUriSymbol}?symbol=${ticker}`,{observe:'body'})  
-  }
-
-  addAsset(newCommodity:UserCommodity){
-    delete newCommodity.commodityId;
-    return this.http.post<any>(this.apiUriCommodity,newCommodity, {observe:'body'});    
-  }
-
-  userCryptoSearch(query:string){
-
-    return this.http.get<Coins[]>(`${this.apiUriSearch}/crypto?query=${query}`)
-
+ 
+  postChange(change:ChangeDto)
+  { 
+    return this.http.post<UserChange>(`${this.apiUriChange}`, change)
+    .pipe(tap(_=> this.hasChanged.next(null)))
+    
   }
 
 }
+  // userAssetSearch(ticker:string){
+  //   return this.http.get<any>(`${this.apiUriSymbol}?symbol=${ticker}`,{observe:'body'})  
+  // }
+
+  // addAsset(newCommodity:UserCommodity){
+  //   delete newCommodity.commodityId;
+  //   return this.http.post<any>(this.apiUriCommodity,newCommodity, {observe:'body'});    
+  // }
+
+  // userCryptoSearch(query:string){
+  //   return this.http.get<Coins[]>(`${this.apiUriSearch}/crypto?query=${query}`)
+
+  // }

@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
-import { AuthService } from './shared/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './auth/auth.service';
+import { Router } from '@angular/router';
+import { AuthResponseDto } from './shared/interfaces/auth-interfaces/login-models/auth-response-dto';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { UserService } from './user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +12,14 @@ import { AuthService } from './shared/services/auth.service';
 })
 export class AppComponent {
   title = 'portfolioproangular';
+  currentUser?:AuthResponseDto;
+  notifierSubscription!: Subscription;
 
-  constructor(private _authService: AuthService){}
+  constructor(private _authService: AuthService ){}
 
   ngOnInit(): void {
-    if(this._authService.isUserAuthenticated())
-      this._authService.sendAuthStateChangeNotification(true);
+    this._authService.currentUser.subscribe(x => this.currentUser = x);
+
+    
   }
 }
