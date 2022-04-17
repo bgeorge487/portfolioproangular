@@ -7,7 +7,7 @@ import { AddUserAssetComponent } from './add-user-asset/add-user-asset.component
 import { CommodityModule } from '../commodity/commodity.module';
 import { AddCommodityComponent } from './add-commodity/add-commodity.component';
 import { UserCommodityDetails } from './user-commodity-details/user-commodity-details.component';
-import { UserUpdateComponent } from './user-profile/user-update/user-update.component';
+import { PortfolioUpdateComponent } from './portfolio-update/portfolio-update.component';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import { UserUpdateComponent } from './user-profile/user-update/user-update.comp
     AddCommodityComponent,
     AddUserAssetComponent,
     UserCommodityDetails,
-    UserUpdateComponent
+    PortfolioUpdateComponent,
   ],
   imports: [
 
@@ -33,7 +33,7 @@ import { UserUpdateComponent } from './user-profile/user-update/user-update.comp
     },
     {
       path: 'user-profile/:id/update',
-      component: UserUpdateComponent
+      component: PortfolioUpdateComponent
       },
     {
     path: 'add-commodity',

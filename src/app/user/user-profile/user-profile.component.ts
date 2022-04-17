@@ -25,7 +25,7 @@ export class UserProfileComponent implements OnInit {
   constructor(public _authService :AuthService, private _userService:UserService ) { 
     
     this._authService.currentUser.subscribe(resp => this.currentUser = resp);
-    this.notifierSubscription = this._userService.hasChanged.subscribe(notified => {
+    this.notifierSubscription = this._userService.hasChanged.subscribe(_ => {
       this.getUserCommodities(this.currentUser.id)
   })
 }

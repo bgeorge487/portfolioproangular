@@ -1,0 +1,45 @@
+
+    <!-- <h2>Last Transaction</h2>
+    <ul>
+    <li> {{mostRecent.changeId}}</li>
+    <li> {{mostRecent.changeTime}}</li>
+    <li> {{mostRecent.totalAmount - mostRecent.changeAmount}}</li>
+    <li> {{mostRecent.totalAmount}}</li>
+    <li> {{mostRecent.commodity?.commodityName}}</li>
+    <li> {{mostRecent.commodity?.stockSymbol}}</li>
+    <li> {{mostRecent.commodity?.stockSymbol}}</li>
+    <li> {{mostRecent.commodity?.type}}</li>
+    <br>
+     -->
+    <hr>
+    <h2>Previous Transactions</h2>
+<ul *ngFor="let change of changeHistory; let i = index">
+    <li>Transaction# {{change.changeId}}</li>
+    <br>
+    <li>Date: {{change.changeTime}}</li>
+    <li>Previous Total: {{change.totalAmount - change.changeAmount }}</li>
+    <li>Current Total:  {{change.totalAmount}}</li>
+    <li>name: {{change.commodity?.commodityName}}</li>
+    <li>Symbol: {{change.commodity?.stockSymbol}}</li>
+    <li>Type: {{change.commodity?.type}}</li>
+</ul>
+<button  
+type="submit" class="btn btn-primary"(click)="onClick()" >Update?
+</button>
+
+<div *ngIf="reveal"> 
+    <form [formGroup]="updateForm" autocomplete="off" novalidate (ngSubmit)="subUpdate(updateForm.value)">
+        <div class="form-group row">
+            <label for="newTotal" class="col-form-label col-sm-2">New Total:</label>
+            <div class="col-md-5">
+                <input type="number" id="newTotal" formControlName="newTotal" class="form-control" />
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-info" [disabled]="!updateForm.valid">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -26,6 +26,7 @@ symbol:string=""
 uuid: string='';
 loading: boolean =true;
 crypto?:CoinDetail;
+stockDetail:any
 
   constructor(private route:ActivatedRoute, private _commodityService:CommodityService, private _authService:AuthService) { 
      
@@ -38,7 +39,14 @@ crypto?:CoinDetail;
       this._commodityService.getCommodityById(+this.paramId)
      .subscribe({next: (resp) => this.commodityDetail=resp,});
     
-     const waitForIt:any = ()=> this._commodityService.getCryptobyUuid(this.commodityDetail.uuid).subscribe(resp=> this.crypto=resp)
+     const waitForIt:any = ()=>{ if(this.commodityDetail.type=="Crypto")
+     {this._commodityService.getCryptobyUuid(this.commodityDetail.uuid).subscribe(resp=> this.crypto=resp)}
+     else{
+      this._commodityService.userAssetSearch(this.commodityDetail.stockSymbol)
+       .subscribe((response) => {this.stockDetail = response})
+    }
+    }
+    
                                                     
        
       asyncScheduler.schedule(waitForIt, 1500);

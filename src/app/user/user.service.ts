@@ -33,14 +33,18 @@ export class UserService {
   getUserCommodities(id:any){
     return this.http.get<UserChange[]>(`${this.apiUriUser}?id=${id}`)
   }
-
+  
+  getUserCommodityDetail(userid:string, commId: number){
+    return this.http.get<UserChange[]>(`${this.apiUriUser}/details?userid=${userid}&commid=${commId}`)
+  }
  
   postChange(change:ChangeDto)
   { 
     return this.http.post<UserChange>(`${this.apiUriChange}`, change)
     .pipe(tap(_=> this.hasChanged.next(null)))
-    
   }
+
+
 
 }
   // userAssetSearch(ticker:string){
