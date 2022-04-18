@@ -1,4 +1,11 @@
-<div *ngIf="qId"> 
+
+<div *ngIf="commodity">
+<h1> {{commodity.commodityName}} </h1>
+<p>{{commodity.stockSymbol}}</p>
+<p>{{commodity.type}}</p>
+
+</div>
+<div> 
 <form [formGroup]="changeForm" autocomplete="off" novalidate (ngSubmit)="onSubmit(changeForm.value)">
     <div class="form-group row">
         <label for="newTotal" class="col-form-label col-sm-2">New Total:</label>
@@ -14,7 +21,7 @@
     </div>
 </form>
 </div>
-<div *ngIf="!qId"> 
+<div *ngIf="!commodity"> 
     <form [formGroup]="tickerForm" autocomplete="off" novalidate (ngSubmit)="tickerSubmit(tickerForm.value)">
         <div class="form-group row">
             <label for="ticker" class="col-form-label col-sm-2">Ticker/Symbol</label>

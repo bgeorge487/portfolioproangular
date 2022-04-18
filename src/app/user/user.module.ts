@@ -8,6 +8,9 @@ import { CommodityModule } from '../commodity/commodity.module';
 import { AddCommodityComponent } from './add-commodity/add-commodity.component';
 import { UserCommodityDetails } from './user-commodity-details/user-commodity-details.component';
 import { PortfolioUpdateComponent } from './portfolio-update/portfolio-update.component';
+import { CommodityResolver } from './commodity-resolver.service';
+
+import { ChangesResolver } from './changes-resolver.service';
 
 
 @NgModule({
@@ -29,19 +32,24 @@ import { PortfolioUpdateComponent } from './portfolio-update/portfolio-update.co
      },
     {
     path: 'user-profile/:id/details',
-    component: UserCommodityDetails
+     component: UserCommodityDetails,
+     resolve:{resolvedCommodity: CommodityResolver}
     },
     {
-      path: 'user-profile/:id/update',
-      component: PortfolioUpdateComponent
+      path: 'user-profile/:id/update/:uid',
+      component: PortfolioUpdateComponent,
+      resolve:{resolvedCommodity: CommodityResolver,
+               resolvedChanges: ChangesResolver}
       },
     {
     path: 'add-commodity',
     component: AddCommodityComponent
     },
     {
-    path: 'portfolio',
-    component: AddUserAssetComponent
+    path: 'portfolio-add',
+    component: AddUserAssetComponent,
+    resolve:{resolvedCommodity: CommodityResolver,
+             resolvedChanges: ChangesResolver}
     } 
     ]),
     FormsModule,

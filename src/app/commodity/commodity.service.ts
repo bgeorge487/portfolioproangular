@@ -51,13 +51,23 @@ export class CommodityService {
   }
 
 
-  getNewlyAddedAsset(name:string, symbol:string){
-    
-    return this.http.get<UserCommodity>(`${this.apiUriCommodity}/new?name=${name}&symbol=${symbol}`)
+  getNewlyAddedAsset(symbol?:string, uuid?:string){
+    if(typeof uuid!== 'undefined'||""){
+      return this.http.get<UserCommodity>(`${this.apiUriCommodity}/new?symbol=${symbol}&uuid=${uuid}`)
+    }
+    else{
+      return this.http.get<UserCommodity>(`${this.apiUriCommodity}/new?symbol=${symbol}`)
+    }
+   
   }
 
-  getCommodityById(id:number){
+  getCommodityById(id?:number, symbol?:string, uuid?: string){
+    if(typeof id!=='undefined' && typeof uuid =='undefined'||""){
     return this.http.get<UserCommodity>(`${this.apiUriCommodity}/${id}`)
+    }
+    else{
+      return this.getNewlyAddedAsset(symbol,uuid)
+    }
   }
 
  

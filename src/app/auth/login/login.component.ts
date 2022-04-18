@@ -43,3 +43,4 @@ export class LoginComponent implements OnInit {
           })
   }
 }
+// , {queryParams:{user:data.id}}

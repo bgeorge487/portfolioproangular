@@ -24,13 +24,17 @@ export class UserProfileComponent implements OnInit {
 
   constructor(public _authService :AuthService, private _userService:UserService ) { 
     
-    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
     this.notifierSubscription = this._userService.hasChanged.subscribe(_ => {
       this.getUserCommodities(this.currentUser.id)
   })
 }
 
   ngOnInit(): void {
+
+    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
+
+
+
   this.getUserCommodities(this.currentUser.id)
  
   this.userName=this.currentUser.email.substring(0, this.currentUser.email.lastIndexOf("@"))

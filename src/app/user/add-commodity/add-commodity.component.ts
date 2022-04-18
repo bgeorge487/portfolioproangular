@@ -60,11 +60,16 @@ searchForm!:FormGroup;
      
   }
 
+  changeTextToUppercase(input:string) {
+ 
+     
+  }
+  
 
   onSubmit(searchFormValue:any){
     const form = {...searchFormValue };
     this.commodity.type =form.assetClass
-    this.commodity.stockSymbol = form.tickerSymbol
+    this.commodity.stockSymbol = form.tickerSymbol.toUpperCase();
 
     this.assetSearch(this.commodity)
   }
@@ -90,28 +95,25 @@ searchForm!:FormGroup;
     } 
     
   addCrypto(name:string, symbol:string, uuid:string){
-
    this.commodity.commodityName = name
    this.commodity.stockSymbol = symbol
    this.commodity.uuid= uuid
 
     this._commodityService.addAsset(this.commodity)
-    .subscribe(_ => this.doAddToPortfolio = true)
-  }
+    .subscribe(_ => this.doAddToPortfolio = true) }
 
   addStock(){
     this._commodityService.addAsset(this.commodity)
-    .subscribe(_ => this.doAddToPortfolio = true)
-  }
+    .subscribe(_ => this.doAddToPortfolio = true)}
 
-  addToPortfolio(){
 
-      this._commodityService.getNewlyAddedAsset(this.commodity.commodityName, this.commodity.stockSymbol)
-        .subscribe((resp => {this._userService.notifyAboutChange;
-          this.router.navigate(['/portfolio'],{queryParams:{Id:resp.commodityId}})}))
+  // addToPortfolio(){
+  //     this._commodityService.getNewlyAddedAsset(this.commodity.commodityName, this.commodity.stockSymbol)
+  //       .subscribe((resp => {this._userService.notifyAboutChange;
+  //         this.router.navigate(['/portfolio-add'],{queryParams:{Id:resp.commodityId}})}))
 
      
   
-   }
+  //  }
 
 }

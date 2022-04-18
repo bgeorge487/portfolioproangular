@@ -4,6 +4,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { asyncScheduler } from 'rxjs/internal/scheduler/async';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login-models/auth-response-dto';
+import { UserCommodity } from 'src/app/shared/interfaces/commodity-interfaces/user-commodity';
 import { ChangeDto } from 'src/app/shared/interfaces/user-interfaces/change-dto';
 import { UserChange } from 'src/app/shared/interfaces/user-interfaces/user-change';
 import { UserService } from '../user.service';
@@ -15,53 +16,58 @@ import { UserService } from '../user.service';
 })
 export class PortfolioUpdateComponent implements OnInit {
 
-  currentUser!: AuthResponseDto;
-  paramId:any;
+  // currentUser!: AuthResponseDto;
+ 
   changeHistory: UserChange[] =[];
   updateForm!:FormGroup;
   update!: ChangeDto;
   reveal:boolean=false;
   mostRecent!: UserChange
+  commodity!:UserCommodity
 
   constructor(public _authService:AuthService, private _userService:UserService, private route:ActivatedRoute,private _router:Router, ) { 
     
-    this._authService.currentUser.subscribe(resp => this.currentUser = resp);
-    this.paramId = route.snapshot.paramMap.get('id') || ''
+    // this._authService.currentUser.subscribe(resp => this.currentUser = resp);
+    
 }
 
   ngOnInit(): void {
-   this.getDetails(this.currentUser.id,+this.paramId);
-   
-   this.updateForm = new FormGroup({
-    newTotal: new FormControl("", [Validators.required])
 
+    const resolvedData:UserCommodity = this.route.snapshot.data['resolvedCommodity'];
+    const resovledChanges:UserChange[] =this.route.snapshot.data['resovledChanges']
+    // this.mostRecent= resovledChanges[0];
+   
+    this.setDetails(resolvedData,resovledChanges )
+   this.updateForm = new FormGroup({
+    total: new FormControl("", [Validators.required])
     
   })
   }
   
-
-  getDetails(uId:string,cId:number)
+  setDetails(commodity:UserCommodity, changeHistory:UserChange[])
   {
-
-    this._userService.getUserCommodityDetail(uId,cId)
-       .subscribe(resp=> this.changeHistory = resp)
-
+    this.commodity = commodity;
+    this.changeHistory= changeHistory;
+    this.mostRecent=this.changeHistory[0];
   }
 
   onClick=()=>{
     this.reveal=true;
-
   }
 
   subUpdate(changeFormValue:any){
   
-  const newTotal ={...changeFormValue} 
-  this.update.totalAmount=newTotal.newTotal
-  this.update.changeAmount= newTotal.newTotal -this.mostRecent.totalAmount
-  this.update.commodityId= +this.paramId  
-  this.update.userId=this.currentUser.id
-
-  this._userService.postChange(this.update)
+  const total = {...changeFormValue} 
+   
+  const change:ChangeDto={
+    changeTime: new Date(),
+    totalAmount:total.total,
+    changeAmount: total.total - this.mostRecent.totalAmount,
+    commodityId: this.commodity.commodityId,
+    userId:this.mostRecent.userId
+  }
+  
+  this._userService.postChange(change)
 .subscribe(resp =>{this._router.navigate(['/user-profile']);
                    this._userService.notifyAboutChange;})
   }

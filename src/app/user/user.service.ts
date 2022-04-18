@@ -34,7 +34,12 @@ export class UserService {
     return this.http.get<UserChange[]>(`${this.apiUriUser}?id=${id}`)
   }
   
-  getUserCommodityDetail(userid:string, commId: number){
+  getUserCommodityDetail(userid:string, commId?: number){
+
+    if(typeof commId == 'undefined'){
+      
+      return this.getUserCommodities(userid)
+    }
     return this.http.get<UserChange[]>(`${this.apiUriUser}/details?userid=${userid}&commid=${commId}`)
   }
  

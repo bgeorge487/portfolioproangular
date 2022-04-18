@@ -2,7 +2,7 @@
   <div>
     <ul>
       <li><a class="navbar-brand" routerLink="/add-commodity">Add Commodity</a></li>
-      <li> <a class="navbar-brand"routerLink="/portfolio">Add To Portfolio</a></li>
+      <li> <a class="navbar-brand"routerLink="/portfolio-add">Add To Portfolio</a></li>
     </ul>
   </div>
 </nav>
@@ -35,10 +35,12 @@
         <td>{{commodity.commodity?.stockSymbol}}</td>    
         <td>{{commodity.commodity?.type}}</td>
         <br>
-        <td><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'details']" routerLinkActive="active" 
-          [routerLinkActiveOptions]="{exact: true}">Details</a></td>   
-          <td><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'update']" routerLinkActive="active" 
-          [routerLinkActiveOptions]="{exact: true}">Update</a></td> 
+        <td><button><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'details']" routerLinkActive="active" 
+          [routerLinkActiveOptions]="{exact: true}">Details</a></button></td>   
+          <br>
+          <td><button><a class="navbar-brand" [routerLink]="['/user-profile', commodity.commodityId,'update',currentUser.id]" routerLinkActive="active" 
+          [routerLinkActiveOptions]="{exact: true}">Update</a></button></td> 
+          <br>
       </tr>
     </tbody>
   </table>

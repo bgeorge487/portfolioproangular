@@ -30,9 +30,9 @@ type="submit" class="btn btn-primary"(click)="onClick()" >Update?
 <div *ngIf="reveal"> 
     <form [formGroup]="updateForm" autocomplete="off" novalidate (ngSubmit)="subUpdate(updateForm.value)">
         <div class="form-group row">
-            <label for="newTotal" class="col-form-label col-sm-2">New Total:</label>
+            <label for="total" class="col-form-label col-sm-2">New Total:</label>
             <div class="col-md-5">
-                <input type="number" id="newTotal" formControlName="newTotal" class="form-control" />
+                <input type="number" id="total" formControlName="total" class="form-control" />
             </div>
         </div>
         <br>
