@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit {
     this.getUserCommodities(this.currentUser.id)
  
   this.userName=this.currentUser.email.substring(0, this.currentUser.email.lastIndexOf("@"))
-  this.notifierSubscription = this._userService.eventEmitterNotifier.subscribe(resp => { this.getUserCommodities(this.currentUser.id)})
+  // this.notifierSubscription = this._userService.eventEmitterNotifier.subscribe(resp => { this.getUserCommodities(this.currentUser.id)})
 }
 
 private getUserCommodities(id:any){

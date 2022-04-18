@@ -39,19 +39,18 @@ export class AddUserAssetComponent implements OnInit {
       this.tickerForm =this.formBuilder.group({
       ticker: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(7)]],
     })
-
-
   }
 
 
   ngOnInit(): void {
-    type Nullable<T> = T | null;
+
     
    const resolvedData:UserCommodityResolved = this.route.snapshot.data['resolvedCommodity'];
-   console.log(resolvedData)
+   console.log(resolvedData.userCommodity?.commodityName)
+   console.log(resolvedData.error)
   
 
-   if(resolvedData.userCommodity!= null){
+   if(resolvedData.userCommodity!== null){
 
     this.commodity = resolvedData.userCommodity;
     this.tickerForm.setValue({ticker:this.commodity!.stockSymbol});
