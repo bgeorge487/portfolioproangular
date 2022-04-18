@@ -1,30 +1,15 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-    <a class="navbar-brand" [routerLink]="['']" routerLinkActive="active" 
-    [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <span></span>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form class="form-inline my-2 my-lg-0">
-        <ul *ngIf='!currentUser?.isAuthenticated' class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-            <a class="nav-link"[routerLink]="['auth/login']" routerLinkActive="active" 
-              [routerLinkActiveOptions]="{exact: true}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"[routerLink]="['auth/register']" routerLinkActive="active" 
-              [routerLinkActiveOptions]="{exact: true}">Register</a>
-          </li>
-        </ul>
-        <ul *ngIf="currentUser?.isAuthenticated" class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-            <button class="btn btn-link" style="color:blue;" (click)="logout()">Logout</button>
-          </li>        
-        </ul>
-      </form>
-      <a class="nave-item nav-link" routerLink="/commodity"
-      routerLinkActive="active">Commodities</a>
-      <br>
-      <a class="nave-item nav-link" routerLink="/search-stock"
-      routerLinkActive="active">Search</a>
-    </div>
-</nav>
+<div class="navbar">
+  
+  <a class="active" [routerLink]="['']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageHome" alt="home icon" width = "25" height = "25"></a>
+  <a class="active" [routerLink]="['/search-stock']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageSearch" alt="search icon" width = "25" height = "25"></a>
+  <a *ngIf='!isUserAuthenticated'class="active" [routerLink]="['auth/login']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageLogin" alt="login icon" width = "25" height = "25"> Login</a>
+  <a *ngIf='isUserAuthenticated'class="active" [routerLink]="['auth/login']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageLogin" alt="login icon" width = "25" height = "25" <button class="btn btn-link" style="color:blue;" (click)="logout()">Logout</button>> 
+  </a>
+  <a class="active" [routerLink]="['auth/register']" routerLinkActive="active" 
+  [routerLinkActiveOptions]="{exact: true}"><img [src]="imageRegister" alt="registration icon" width = "25" height = "25">Register</a>
+</div>

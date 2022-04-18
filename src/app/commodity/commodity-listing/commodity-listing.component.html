@@ -1,9 +1,19 @@
 <hr>
-<div *ngFor="let detail of quoteDetails; let i = index">
-    <li>{{i+1}}. {{detail.id}}</li>
-    <li>name: {{detail.attributes.name}}</li>
-    <li>Price: ${{detail.attributes.last}}</li>
-    <li>Change: {{detail.attributes.percentChange}}%</li>
-    <br>
-
-</div>
+<h2 class="title">Market Watch</h2>
+<table class="pricing">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Change</th>
+        <th>Change Percent</th>
+    </tr>
+<tr  *ngFor="let detail of quoteDetails; let i = index">
+        
+        <td>{{detail.id}}</td>
+        <td>{{detail.attributes.name}}</td>
+        <td>${{detail.attributes.last}}</td>
+        <td *ngIf="detail.attributes.percentChange > 0" class="positive">{{detail.attributes.percentChange | number:'1.0-2'}}%</td>
+        <td *ngIf="detail.attributes.percentChange < 0" class="negative">{{detail.attributes.percentChange | number:'1.0-2'}}%</td>
+        <br>
+</tr>
+</table>

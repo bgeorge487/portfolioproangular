@@ -5,7 +5,6 @@ import { Coins } from '../shared/interfaces/commodity-interfaces/coins';
 import { map, Subject } from 'rxjs';
 import { CoinDetail } from '../shared/interfaces/commodity-interfaces/coin-detail';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +25,7 @@ export class CommodityService {
   constructor(private http: HttpClient) { }
 
   getSearchResult(search: string, type: string) {
+    console.log(`${this.apiUri}/Search?search=${search}&type=${type}`);
     return this.http.get(`${this.apiUri}/Search?search=${search}&type=${type}`);
   }
 

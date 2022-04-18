@@ -15,6 +15,11 @@ export class MenuComponent implements OnInit {
   userName:any;
  
 
+  imageHome = 'assets/images/home.png'
+  imageSearch = 'assets/images/magnifier.png'
+  imageLogin = 'assets/images/log-in.png'
+  imageRegister = 'assets/images/edit.png'
+
   constructor(private _authService: AuthService, private _router: Router) { 
 
     this._authService.currentUser.subscribe(resp => this.currentUser = resp);
