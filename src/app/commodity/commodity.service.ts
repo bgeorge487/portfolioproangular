@@ -12,6 +12,7 @@ export class CommodityService {
   constructor(private http: HttpClient) { }
 
   getSearchResult(search: string, type: string) {
+    console.log(`${this.apiUri}/Search?search=${search}&type=${type}`);
     return this.http.get(`${this.apiUri}/Search?search=${search}&type=${type}`);
   }
 
