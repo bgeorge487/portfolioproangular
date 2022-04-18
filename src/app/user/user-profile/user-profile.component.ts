@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
 import { UserChange } from '../../shared/interfaces/user-interfaces/user-change';
 import { CommodityService } from 'src/app/commodity/commodity.service';
-import { User } from 'src/app/shared/interfaces/user-interfaces/user';
+
 
 
 @Component({
@@ -19,26 +19,18 @@ export class UserProfileComponent implements OnInit {
   userName = '';
   commodities: UserChange[] =[];
   currentUser!:AuthResponseDto;
-  notifierSubscription:Subscription;
+  notifierSubscription!: Subscription; 
 
+  
 
   constructor(public _authService :AuthService, private _userService:UserService ) { 
-    
-    this.notifierSubscription = this._userService.hasChanged.subscribe(_ => {
-      this.getUserCommodities(this.currentUser.id)
-  })
 }
-
   ngOnInit(): void {
-
     this._authService.currentUser.subscribe(resp => this.currentUser = resp);
-
-
-
-  this.getUserCommodities(this.currentUser.id)
+    this.getUserCommodities(this.currentUser.id)
  
   this.userName=this.currentUser.email.substring(0, this.currentUser.email.lastIndexOf("@"))
-
+  this.notifierSubscription = this._userService.eventEmitterNotifier.subscribe(resp => { this.getUserCommodities(this.currentUser.id)})
 }
 
 private getUserCommodities(id:any){

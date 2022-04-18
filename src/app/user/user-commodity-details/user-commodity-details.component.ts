@@ -8,6 +8,7 @@ import { CommodityService } from 'src/app/commodity/commodity.service';
 import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login-models/auth-response-dto';
 import { CoinDetail } from 'src/app/shared/interfaces/commodity-interfaces/coin-detail';
 import { UserCommodity } from 'src/app/shared/interfaces/commodity-interfaces/user-commodity';
+import { UserCommodityResolved } from 'src/app/shared/interfaces/commodity-interfaces/user-commodity-resolved';
 
 @Component({
   selector: 'app-user-commodity-details',
@@ -17,25 +18,28 @@ import { UserCommodity } from 'src/app/shared/interfaces/commodity-interfaces/us
 export class UserCommodityDetails implements OnInit {
 
 
-
-crypto?:CoinDetail;
-stockDetail:any
+stockDetail:string[] =[]
+commodity!:UserCommodity;
 
   constructor(private route:ActivatedRoute, private _commodityService:CommodityService, private _authService:AuthService) {   
   }
 
   ngOnInit(): void {
-    const resolvedData:UserCommodity = this.route.snapshot.data['resolvedCommodity'];
-    this.getCommodityDetails(resolvedData)
+    const resolvedData:UserCommodityResolved = this.route.snapshot.data['resolvedCommodity'];
+
+    this.getCommodityDetails(resolvedData.userCommodity!)/// null check needed here
                                       
   }
 
   getCommodityDetails(userCommodity:UserCommodity){
+    this.commodity=userCommodity;
     if(userCommodity.uuid){
-      this._commodityService.getCryptobyUuid(userCommodity.uuid).subscribe(resp=> this.crypto=resp)}
+      this._commodityService.getCryptobyUuid(userCommodity.uuid).pipe(map( resp=> Object.entries(resp).map(([key,value])=>`${key}: ${value}` )))
+      .subscribe(resp=> this.stockDetail=resp)}  
       else{
-        this._commodityService.userAssetSearch(userCommodity.stockSymbol)
-         .subscribe((response) => {this.stockDetail = response}) }    
+        this._commodityService.userAssetSearch(userCommodity.stockSymbol).pipe(map( resp=> Object.entries(resp).map(([key,value])=>`${key}: ${value}` )))
+         .subscribe((response) => this.stockDetail = response) }    
+        
   }
 }
 

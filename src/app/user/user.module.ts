@@ -38,8 +38,7 @@ import { ChangesResolver } from './changes-resolver.service';
     {
       path: 'user-profile/:id/update/:uid',
       component: PortfolioUpdateComponent,
-      resolve:{resolvedCommodity: CommodityResolver,
-               resolvedChanges: ChangesResolver}
+      resolve:{resolvedChanges: ChangesResolver}
       },
     {
     path: 'add-commodity',

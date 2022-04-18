@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserChange } from '../shared/interfaces/user-interfaces/user-change';
 import { BehaviorSubject, map, observable, Subject, tap } from 'rxjs';
@@ -21,37 +21,37 @@ export class UserService {
   private apiUriUser : string ="https://localhost:7168/api/user";
   
  
-  hasChanged: Subject<null> = new Subject<null>();
+  eventEmitterNotifier: EventEmitter<null> = new EventEmitter();
   
   constructor(private http: HttpClient) { 
 
   }
  
   notifyAboutChange() {
-    this.hasChanged.next(null);
+    this.eventEmitterNotifier.emit();
   }
+   
   getUserCommodities(id:any){
     return this.http.get<UserChange[]>(`${this.apiUriUser}?id=${id}`)
   }
   
   getUserCommodityDetail(userid:string, commId?: number){
 
-    if(typeof commId == 'undefined'){
-      
-      return this.getUserCommodities(userid)
-    }
     return this.http.get<UserChange[]>(`${this.apiUriUser}/details?userid=${userid}&commid=${commId}`)
+                    
   }
  
   postChange(change:ChangeDto)
   { 
     return this.http.post<UserChange>(`${this.apiUriChange}`, change)
-    .pipe(tap(_=> this.hasChanged.next(null)))
+    
   }
 
 
-
 }
+
+
+// .pipe(tap(_=> this.hasChanged.next(null)))
   // userAssetSearch(ticker:string){
   //   return this.http.get<any>(`${this.apiUriSymbol}?symbol=${ticker}`,{observe:'body'})  
   // }

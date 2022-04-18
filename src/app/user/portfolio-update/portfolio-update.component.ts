@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { asyncScheduler } from 'rxjs/internal/scheduler/async';
 import { AuthService } from 'src/app/auth/auth.service';
 import { AuthResponseDto } from 'src/app/shared/interfaces/auth-interfaces/login-models/auth-response-dto';
 import { UserCommodity } from 'src/app/shared/interfaces/commodity-interfaces/user-commodity';
+import { UserCommodityResolved } from 'src/app/shared/interfaces/commodity-interfaces/user-commodity-resolved';
 import { ChangeDto } from 'src/app/shared/interfaces/user-interfaces/change-dto';
 import { UserChange } from 'src/app/shared/interfaces/user-interfaces/user-change';
+import { UserChangesResolved } from 'src/app/shared/interfaces/user-interfaces/user-changes-resolverd';
 import { UserService } from '../user.service';
 
 @Component({
@@ -25,50 +26,52 @@ export class PortfolioUpdateComponent implements OnInit {
   mostRecent!: UserChange
   commodity!:UserCommodity
 
-  constructor(public _authService:AuthService, private _userService:UserService, private route:ActivatedRoute,private _router:Router, ) { 
+  constructor(public _authService:AuthService, private _userService:UserService, private route:ActivatedRoute,private _router:Router, private formBuilder:FormBuilder) { 
     
     // this._authService.currentUser.subscribe(resp => this.currentUser = resp);
+    this.updateForm=this.formBuilder.group({
+      updateTotal: ['', [Validators.required]]
+    })
     
 }
 
   ngOnInit(): void {
-
-    const resolvedData:UserCommodity = this.route.snapshot.data['resolvedCommodity'];
-    const resovledChanges:UserChange[] =this.route.snapshot.data['resovledChanges']
-    // this.mostRecent= resovledChanges[0];
-   
-    this.setDetails(resolvedData,resovledChanges )
-   this.updateForm = new FormGroup({
-    total: new FormControl("", [Validators.required])
     
-  })
+    const resolvedChanges:UserChangesResolved = this.route.snapshot.data['resolvedChanges']
+     
+    this.changeHistory=resolvedChanges.userChangeArray
+   
+    
+    console.log(this.changeHistory)
+
+    this.setDetails(this.changeHistory)  //null check for usercommodity
+    
   }
   
-  setDetails(commodity:UserCommodity, changeHistory:UserChange[])
+  setDetails(changeHistory:UserChange[])
   {
-    this.commodity = commodity;
-    this.changeHistory= changeHistory;
-    this.mostRecent=this.changeHistory[0];
+   this.mostRecent=this.changeHistory[0]
   }
 
   onClick=()=>{
     this.reveal=true;
+    
   }
 
-  subUpdate(changeFormValue:any){
+  subUpdate(updateFormValue:any){
   
-  const total = {...changeFormValue} 
+  const total = {...updateFormValue} 
    
   const change:ChangeDto={
     changeTime: new Date(),
-    totalAmount:total.total,
-    changeAmount: total.total - this.mostRecent.totalAmount,
-    commodityId: this.commodity.commodityId,
+    totalAmount:total.updateTotal,
+    changeAmount: (total.updateTotal - this.mostRecent.totalAmount),
+    commodityId: this.mostRecent.commodityId,
     userId:this.mostRecent.userId
   }
   
   this._userService.postChange(change)
-.subscribe(resp =>{this._router.navigate(['/user-profile']);
-                   this._userService.notifyAboutChange;})
+    .subscribe(resp =>{this._userService.notifyAboutChange();
+                      this._router.navigate(['/user-profile'])})
   }
 }

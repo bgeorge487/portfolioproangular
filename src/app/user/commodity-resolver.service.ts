@@ -1,29 +1,42 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { CommodityService } from '../commodity/commodity.service';
-import { UserCommodity } from '../shared/interfaces/commodity-interfaces/user-commodity';
+import { UserCommodityResolved } from '../shared/interfaces/commodity-interfaces/user-commodity-resolved';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommodityResolver implements Resolve<UserCommodity>{
+export class CommodityResolver implements Resolve<UserCommodityResolved>{
 
   constructor(private _commodityService:CommodityService, private _userService:UserService) { }
   
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UserCommodity | Observable<UserCommodity> | Promise<UserCommodity> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UserCommodityResolved | Observable<UserCommodityResolved> | Promise<UserCommodityResolved> {
     const id= Number(route.paramMap.get('id'))|| undefined;
-    const symbol:string = route.paramMap.get('symbol')|| '';
-    const uuid:string  = route.paramMap.get('uuid')|| '';
+    const symbol = route.paramMap.get('symbol')||undefined;
+    const uuid  = route.paramMap.get('uuid')|| undefined;
     
+    if(typeof id == undefined && typeof symbol =='undefined'){
+      const message ='blankform'
+      return ({userCommodity:null, error: message});
+    }
     return this._commodityService.getCommodityById(id, symbol, uuid)
+    .pipe(
+      map(userCommodity => ({ userCommodity: userCommodity })))
     
-    throw new Error('Method not implemented.');
+    }
   }
 
+    // if(typeof id&&symbol&&uuid =='undefined'){
+
+    //  return this._commodityService.getCommodityById(id, symbol, uuid)
+    
+    // throw new Error('Method not implemented.');
+
+
   
-}
+
 // getCommodityById(id?:number, symbol?:string, uuid?: string){
 //   if(typeof id!=='undefined' && typeof uuid =='undefined'){
 //   return this.http.get<UserCommodity>(`${this.apiUriCommodity}/${id}`)

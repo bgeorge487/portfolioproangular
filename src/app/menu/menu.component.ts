@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { AuthResponseDto } from '../shared/interfaces/auth-interfaces/login-models/auth-response-dto';
-import { User } from '../shared/interfaces/user-interfaces/user';
+
 
 @Component({
   selector: 'app-menu',

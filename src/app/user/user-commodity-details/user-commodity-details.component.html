@@ -1,17 +1,22 @@
 
 
 
-<h1> need to display current stock values. I struggled displaying stuff here. 
-</h1>
-<div>
-    {{crypto?.symbol}}
-    {{crypto?.description}}
- </div>
+<h1>Details for {{commodity.commodityName}} </h1>
+<h2>Ticker/Symbol: {{commodity.stockSymbol}}</h2>
+<p>Type:{{commodity.type}}</p>
 
-        
-<h2> look at html notes data shows up i just suck at dispalyuing it idk why it's so hard for me
-    both stock and crypto
-</h2>
+
+
+ <div *ngFor="let detail of stockDetail | keyvalue">
+    {{detail.value}} 
+  
+    <!-- {{detail | json }} -->
+    <!-- Object Key:{{item.key}} and Object Value:{{item.value}} -->
+  </div>
+
+
+
+
 
 
 <!-- {"uuid":"qzawljRxB5bYu","symbol":"ADA","name":"Cardano","description":"<p>Cardano (ADA) is a decentralised public blockchain and cryptocurrency project and is fully open source. Cardano is built in the secure Haskell programming language. Cardano is developing a smart contract platform which seeks to deliver lots of advanced features. It claims to be the first blockchain platform to evolve out of a scientific philosophy and a research-first driven approach.</p>\n<h3>The goal of Cardano</h3>\n<p>In 2015, the Cardano project began as an effort to change the way cryptocurrencies are designed and developed. The overall focus beyond a particular set of innovations is to provide a more balanced and sustainable ecosystem that better accounts for the needs of its users as well as other systems seeking integration. Cardano did not begin with a comprehensive roadmap or even an authoritative white paper. It started with a collection of design principles, engineering best practices and avenues for exploration. The Cardano platform now features decentralized applications and contracts that operate at low cost in a secure and scalable way.</p>\n<h3>Who started Cardano</h3>\n<p>Cardano was launched in 2017, and founded by Charles Hoskinson, co-founder of Ethereum. Charles said he wanted to provide a more balanced and sustainable ecosystem for cryptocurrencies. The development team consists of a large global collective of expert engineers and researchers.</p>","iconUrl":"https://cdn.coinranking.com/ryY28nXhW/ada.svg","websiteUrl":"https://www.cardano.org/en/home/","links":[{"name":"www.cardano.org","type":"website","url":"https://www.cardano.org/en/home/"},{"name":"cardano","type":"twitter","url":"https://twitter.com/cardano"},{"name":"r/cardano","type":"reddit","url":"https://www.reddit.com/r/cardano/"},{"name":"Youtube","type":"youtube","url":"https://www.youtube.com/channel/UCbQ9vGfezru1YRI1zDCtTGg"},{"name":"Facebook","type":"facebook","url":"https://www.facebook.com/groups/cardanocommunity"},{"name":"input-output-hk/cardano-sl","type":"github","url":"https://github.com/input-output-hk/cardano-sl"}],"supply":{"confirmed":true,"total":"31112484745","circulating":"31112484745"},"numberOfMarkets":292,"numberOfExchanges":91,"coinrankingUrl":"https://coinranking.com/coin/qzawljRxB5bYu+cardano-ada","marketCap":"29315181789","price":"0.9422320984546922","listedAt":1506902400,"tier":1,"change":"-0.17","rank":9,"lowVolume":false,"24Volume":null,"btcPrice":"0.000023531309193976","allTimeHigh":{"price":"3.0946205629514947","timestamp":1630540800}} -->

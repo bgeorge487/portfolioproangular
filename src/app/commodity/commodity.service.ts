@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserCommodity } from '../shared/interfaces/commodity-interfaces/user-commodity';
 import { Coins } from '../shared/interfaces/commodity-interfaces/coins';
@@ -34,7 +34,7 @@ export class CommodityService {
     return this.http.get(`${this.apiUri}/Quote?symbols=${symbol}`);
   }
   getCryptobyUuid(uuid:any){
-    return this.http.get<CoinDetail>(`${this.apiUriCoin}/uuid?uuid=${uuid}`,{observe:'body'})
+    return this.http.get<any>(`${this.apiUriCoin}/uuid?uuid=${uuid}`,{observe:'body'})
   }
   // .pipe(map((resp)=>{JSON.parse(JSON.stringify(resp))}))
   userAssetSearch(ticker:string){
@@ -52,20 +52,30 @@ export class CommodityService {
 
 
   getNewlyAddedAsset(symbol?:string, uuid?:string){
-    if(typeof uuid!== 'undefined'||""){
+   
+    console.log(uuid)
+    if(typeof uuid != 'undefined'){
+
       return this.http.get<UserCommodity>(`${this.apiUriCommodity}/new?symbol=${symbol}&uuid=${uuid}`)
     }
     else{
+     
       return this.http.get<UserCommodity>(`${this.apiUriCommodity}/new?symbol=${symbol}`)
     }
-   
   }
 
   getCommodityById(id?:number, symbol?:string, uuid?: string){
-    if(typeof id!=='undefined' && typeof uuid =='undefined'||""){
+  
+   console.log(id)
+
+   if(typeof id!=='undefined'||null && typeof symbol =='undefined'||""){
+      
     return this.http.get<UserCommodity>(`${this.apiUriCommodity}/${id}`)
+
     }
+
     else{
+
       return this.getNewlyAddedAsset(symbol,uuid)
     }
   }
